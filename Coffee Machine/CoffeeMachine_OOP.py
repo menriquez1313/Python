@@ -1,11 +1,15 @@
-"""This is a Coffee Machine!
+"""This is a Coffee Machine OOP Ver. !
 There are 4 selections: Espresso, Latte, Cappuccino, and Report. 
 Report will allow the user to check on the Resources.
 Resources will update for every drink bought. """
 
+from menu import Menu, MenuItem
+from coffee_maker import CoffeeMaker
+from money_machine import MoneyMachine
 import time
 
 #Coffee Menu
+"""
 MENU = {
     "espresso": {
         "ingredients": {
@@ -31,6 +35,7 @@ MENU = {
         "cost": 3.0,
     }
 }
+"""
 
 #These are the limited resources. 
 resources = {
@@ -40,6 +45,7 @@ resources = {
     "money": 0
 }
 
+"""
 #checks if there is enough resources
 def sufficient(coffee):
     for items in coffee:
@@ -65,28 +71,38 @@ def money(price):
     rec_money = resources.get("money")
     resources["money"] = rec_money + total
     return True
- 
+
 #updates the resources after payment   
 def make_coffee(ingredients):
      for items in ingredients:
         resources[items] = resources[items] - ingredients[items]
         #print(ingredients[items]) #test to see if resources are updating
-    
+ """    
+
+MENU = Menu()
+#menu_item = MenuItem()
+coffee_maker = CoffeeMaker() #resources
+money_machine = MoneyMachine()
+
 is_on = True
 while is_on == True:
     choice = input("What would you like? (espresso, latte, cappuccino) ")
     
     if choice == "off":
         print("Shutting off...")
-        time.sleep(2)
+        #time.sleep(2)
         print("Have a nice day! ")
         is_on = False
     elif choice == "report":
+        """
         print(f"Water: {resources['water']}ml.")
         print(f"Milk: {resources['milk']}ml.")
         print(f"Coffee: {resources['coffee']}g.")
         print(f"Money:${resources['money']}")
+        """
+        print(coffee_maker.report())
     else:
+        """
         drink = MENU[choice]
         if sufficient(drink["ingredients"]):
             if money(drink["cost"]):
@@ -94,4 +110,10 @@ while is_on == True:
                 make_coffee(drink["ingredients"])
                 time.sleep(3)
                 print(f"Here is your {choice}!")
-                
+        """
+        drink = choice
+        if coffee_maker.is_resource_sufficient(drink):
+            print("works")
+        
+        
+        
