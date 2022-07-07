@@ -21,24 +21,24 @@ while is_on == True:
     options = menu.get_items()
     choice = input(f"What would you like? {options}: ")
     
+    #If user chooses off, coffee machine will shutdown.
     if choice == "off":
         print("Shutting off...")
-        #time.sleep(2)
+        time.sleep(2)
         print("Have a nice day! ")
         is_on = False
+    
+    #Report will show what ingredients are left and how much money has been made. 
     elif choice == "report":
-        print(coffee_maker.report())
-        print(money_machine.report())
+        coffee_maker.report()
+        money_machine.report()
+        
+    #This processes the payment and makes drinks. 
+    #if insufficient with ingredients and/or payment, machine will not continue. 
     else:
-        """
-        drink = MENU[choice]
-        if sufficient(drink["ingredients"]):
-            if money(drink["cost"]):
-                print("Making coffee!..... Please wait!")
-                make_coffee(drink["ingredients"])
-                time.sleep(3)
-                print(f"Here is your {choice}!")
-        """
         drink = menu.find_drink(choice)
         if coffee_maker.is_resource_sufficient(drink):
-            print(money_machine.make_payment(drink.cost))
+            if money_machine.make_payment(drink.cost):
+                print("Making Drink! Please wait...")
+                time.sleep(3)
+                coffee_maker.make_coffee(drink)
