@@ -3,6 +3,7 @@ There are 4 selections: Espresso, Latte, Cappuccino, and Report.
 Report will allow the user to check on the Resources.
 Resources will update for every drink bought. """
 
+from importlib.resources import is_resource
 from menu import Menu, MenuItem
 from coffee_maker import CoffeeMaker
 from money_machine import MoneyMachine
@@ -79,14 +80,15 @@ def make_coffee(ingredients):
         #print(ingredients[items]) #test to see if resources are updating
  """    
 
-MENU = Menu()
-#menu_item = MenuItem()
+menu = Menu()
+#menu_item = Menu()
 coffee_maker = CoffeeMaker() #resources
-money_machine = MoneyMachine()
+money_maker = MoneyMachine()
 
 is_on = True
 while is_on == True:
-    choice = input("What would you like? (espresso, latte, cappuccino) ")
+    options = menu.get_items()
+    choice = input(f"What would you like? {options}: ")
     
     if choice == "off":
         print("Shutting off...")
@@ -101,6 +103,7 @@ while is_on == True:
         print(f"Money:${resources['money']}")
         """
         print(coffee_maker.report())
+        print(money_maker.report())
     else:
         """
         drink = MENU[choice]
@@ -111,9 +114,5 @@ while is_on == True:
                 time.sleep(3)
                 print(f"Here is your {choice}!")
         """
-        drink = choice
-        if coffee_maker.is_resource_sufficient(drink):
-            print("works")
-        
-        
+        drink = menu.find_drink()
         
