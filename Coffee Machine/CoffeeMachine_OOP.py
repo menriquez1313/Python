@@ -12,12 +12,9 @@ import time
 #Coffee Menu
 
 
-#These are the limited resources. 
-
-
+money_machine = MoneyMachine()
+coffee_maker = CoffeeMaker()
 menu = Menu()
-coffee_maker = CoffeeMaker() #resources
-money_maker = MoneyMachine()
 
 is_on = True
 while is_on == True:
@@ -31,7 +28,7 @@ while is_on == True:
         is_on = False
     elif choice == "report":
         print(coffee_maker.report())
-        print(money_maker.report())
+        print(money_machine.report())
     else:
         """
         drink = MENU[choice]
@@ -42,6 +39,6 @@ while is_on == True:
                 time.sleep(3)
                 print(f"Here is your {choice}!")
         """
-        drink = menu.find_drink()
-        print(coffee_maker.is_resource_sufficient(drink))
-        
+        drink = menu.find_drink(choice)
+        if coffee_maker.is_resource_sufficient(drink):
+            print(money_machine.make_payment(drink.cost))
