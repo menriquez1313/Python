@@ -26,19 +26,26 @@ color_list = [(202, 164, 110), (240, 245, 241), (236, 239, 243), (149, 75, 50),
               (160, 142, 158), (54, 45, 50), (101, 75, 77), (183, 205, 171), (36, 60, 74), (19, 86, 89), (82, 148, 129), 
               (147, 17, 19), (27, 68, 102), (12, 70, 64), (107, 127, 153), (176, 192, 208), (168, 99, 102)]
 
-
-
+#created dots and new lines
 def make_dots(lines):
-    for x in range(int(lines)):
-        the_turtle.home()
+    for x in range(lines):
         for y in range(10):
-            the_turtle.penup()
+            #the_turtle.penup()
             the_turtle.dot(20, random.choice(color_list))
             the_turtle.forward(50)
         the_turtle.seth(90)
         the_turtle.forward(50)
-            
+        the_turtle.seth(180)
+        the_turtle.forward(500)
+        the_turtle.seth(0)
+
+#sets the marker new coordinates to give more space for the picture being drawn         
 the_turtle = t.Turtle()
+the_turtle.penup()
+the_turtle.seth(225)
+the_turtle.forward(400)
+the_turtle.seth(0)
+
 lines = int(input("How many lines of dots?:" ))
 
 make_dots(lines)
