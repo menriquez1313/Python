@@ -12,7 +12,7 @@ colors = ["red", "orange","yellow", "green", "blue", "purple"]
 y_positions = [-100, -60, -20, 20, 60, 100]
 all_turtles = []
 
-
+#creates turtles
 for turtle_index in range(0, 6):
     new_turtle = Turtle(shape="turtle")
     new_turtle.color(colors[turtle_index])
@@ -20,6 +20,8 @@ for turtle_index in range(0, 6):
     new_turtle.goto(x=-240, y=y_positions[turtle_index])
     all_turtles.append(new_turtle)
 
+#if bet is created, game continues through a while loop. 
+#if no bet, race ends. 
 if user_bet:
     race_on = True
 else:
@@ -31,10 +33,11 @@ while race_on:
         if turtle.xcor() > 230:
             race_on = False
             winning_color = turtle.pencolor()
-            if winning_color == user_bet:
+            #Checks users bet and announces win or lose.
+            if winning_color == user_bet: 
                 print(f"Winner! The {winning_color} turtle is the winner!")
             else:
-                print(f"Sorry. The winner is {winning_color} turtle. :( ")
+                print(f"Sorry. The winner is {winning_color} turtle. :( ") 
         
         random_distance = random.randint(0, 10)
         turtle.forward(random_distance) #moves current turtle from All_turtle list
