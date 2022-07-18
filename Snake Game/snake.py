@@ -13,4 +13,12 @@ class Snake:
             new_seg.penup()
             new_seg.color("white")
             new_seg.goto(position)
-            self.segments.append(new_seg)    
+            self.segment.append(new_seg)    
+            
+    def move(self):
+        #The for loop connects each segment to follow the head. 
+        for seg_num in range(len(self.segment) - 1, 0, -1 ):
+            new_x = self.segment[seg_num - 1].xcor()
+            new_y = self.segment[seg_num - 1].ycor()
+            self.segment[seg_num].goto(new_x, new_y)
+        self.segment[0].forward(20)
