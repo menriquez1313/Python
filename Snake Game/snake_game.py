@@ -25,8 +25,13 @@ game_on = True
 while game_on:
     screen.update()
     time.sleep(0.1)
-    
     snake.move()
+    
+    
+    #Detect collision with food. 
+    if snake.head.distance(food) < 15:
+        print("Ate food!")
+        food.refresh()
  
 
 
