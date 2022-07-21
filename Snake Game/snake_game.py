@@ -2,6 +2,7 @@ from tracemalloc import start
 from turtle import Screen
 from snake import Snake
 from food import Food
+from scoreboard import Score
 import time
 
 screen = Screen()
@@ -13,6 +14,7 @@ segments =[]
     
 snake = Snake()
 food = Food()
+score = Score()
 
 screen.listen()
 screen.onkey(snake.up,"Up")
@@ -32,6 +34,7 @@ while game_on:
     if snake.head.distance(food) < 15:
         print("Ate food!")
         food.refresh()
+        score.increase_score()
  
 
 
