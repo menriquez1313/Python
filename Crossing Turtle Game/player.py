@@ -1,3 +1,5 @@
+#Creates Turtle 
+
 from turtle import Turtle
 
 STARTING_POSITION = (0, -280)
