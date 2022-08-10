@@ -20,8 +20,10 @@ states_list = data["state"].to_list()
 
 
 guess = 0
-while guess == 50:
-    answer_state = screen.textinput(title=f"{guess}/50 States Guessed", prompt="Guess a State:")
+while guess < 50:
+    answer_state = screen.textinput(title=f"{guess}/50 States Guessed", prompt="Guess a State or Type 'Exit'")
+    if answer_state == "Exit":
+        break
     for state in states_list:
         if state.lower() == answer_state.lower():
             x = int(data.x[data.state == state])
@@ -35,5 +37,3 @@ while guess == 50:
         
 print("Thank you for playing!")
             
-            
-screen.exitonclick()
