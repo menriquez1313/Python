@@ -1,28 +1,39 @@
 import turtle
+import csv
+import pandas
 
+#creates the screen
 screen = turtle.Screen()
 screen.title("U.S. States Quiz Game")
 image = "blank_states_img.gif"
 screen.addshape(image)
 turtle.shape(image)
 
+#creates the turtle that marks state on map
+state_name = turtle.Turtle()
+state_name.penup()
+state_name.hideturtle()
 
-answer_state = screen.textinput(title="Guess the State's namn!", prompt="Guess a State:")
-
-
-
-
-def get_mouse_click_coor(x,y):
-    print(x,y)
-    
-turtle.onscreenclick(get_mouse_click_coor)
-
-turtle.mainloop()
+#opens CSV file
+data = pandas.read_csv("50_states.csv")
+states_list = data["state"].to_list()
 
 
-
-
-
-
-
-# screen.exitonclick()
+guess = 0
+while guess == 50:
+    answer_state = screen.textinput(title=f"{guess}/50 States Guessed", prompt="Guess a State:")
+    for state in states_list:
+        if state.lower() == answer_state.lower():
+            x = int(data.x[data.state == state])
+            y = int(data.y[data.state == state])
+            
+            state_name.goto(x,y)
+            state_name.write(state)
+            
+            states_list.remove(state)
+            guess += 1
+        
+print("Thank you for playing!")
+            
+            
+screen.exitonclick()
