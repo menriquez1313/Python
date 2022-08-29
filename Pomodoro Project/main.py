@@ -23,6 +23,9 @@ def countdown(count):
     #"00:00"
     count_min = math.floor(count / 60)
     count_sec = count % 60
+    if count_sec == 0:
+        count_sec = "00"
+        
     
     canvas.itemconfig(timer_text,text=f"{count_min}:{count_sec}")
     if count > 0:
