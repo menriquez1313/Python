@@ -1,4 +1,5 @@
 from cgitb import reset, text
+from itertools import count
 from tkinter import *
 from tkinter.tix import COLUMN
 from turtle import color
@@ -12,31 +13,66 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+reps = 0
+timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 
+def reset_timer():
+    window.after_cancel(timer)
+    canvas.itemconfig(timer_text, text="00:00")
+    title_label.config(text="Timer")
+    checkmark_button.config(text="")
+
+
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
-    countdown(WORK_MIN*60)
+    global reps
+    reps += 1
+    work_sec = WORK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
+    
+    
+    countdown(work_sec)
+    if reps % 8 == 0:
+        countdown(long_break_sec)
+        timer_label.config(text="Break",fg=RED)
+    elif reps % 2 == 0:
+        countdown(short_break_sec)
+        timer_label.config(text="Break",fg=PINK)
+    else:
+        countdown(work_sec)
+        timer_label.config(text="Work",fg=GREEN)
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def countdown(count):
     #"00:00"
     count_min = math.floor(count / 60)
     count_sec = count % 60
-    if count_sec == 0:
-        count_sec = "00"
-        
+    if count_sec < 10:
+        count_sec = f"0{count_sec}"
+    
     
     canvas.itemconfig(timer_text,text=f"{count_min}:{count_sec}")
     if count > 0:
-        window.after(1000, countdown, count - 1)
+        global timer
+        timer = window.after(1000, countdown, count - 1)
+    else:
+        start_timer()
+        marks = ""
+        work_sessions =math.floor(reps/2)
+        for _ in range(work_sessions):
+            mark += "✔️"
+        checkmark_button.config(text=marks)
+            
+            
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Pomodoro")
 window.config(padx=100,pady=50, bg=YELLOW)
 
 
-    
+title_label = Label(text="Timer", fg=GREEN)
 
 
 canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
@@ -54,10 +90,10 @@ timer_label.grid(column=1, row=0)
 start_button = Button(text="Start",command=start_timer)
 start_button.grid(column=0,row=2)
 
-reset_button = Button(text="Reset")
+reset_button = Button(text="Reset",command=reset_timer)
 reset_button.grid(column=2, row=2)
 
-checkmark_button = Button(text= "✔", fg=GREEN)
+checkmark_button = Button(fg=GREEN, bg=YELLOW)
 checkmark_button.grid(column=1, row=3)
 
 
